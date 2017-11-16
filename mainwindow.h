@@ -47,6 +47,8 @@ private slots:
 
     void readData(QString data);
 
+    void closeEvent(QCloseEvent *event);
+
 private:
     void init();
 private:

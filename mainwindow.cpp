@@ -25,6 +25,13 @@ MainWindow::~MainWindow()
     updateComInfo = nullptr;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    updateComInfo->stop();
+    updateComInfo->wait();
+    serialPort->close();
+}
+
 void MainWindow::init()
 {
     serialPort = new MySerialPort();
@@ -151,15 +158,18 @@ void MainWindow::sendData()
 
 void MainWindow::readData(QString data)
 {
-//    QByteArray b = data.toUtf8();
-//    char *ch = b.data();
-//    char s[8] = {'\0'};
-//    QString str = "";
-//    for (int i = 0; i < b.size(); ++i) {
-//        sprintf(s, "%02x", ch[i]);
-//        str.append(s);
-//    }
     QString str = ui->teDataReceived->toPlainText();
-    str += data;
+    if (ui->ccbHex->checkState()) {
+        QByteArray b = data.toUtf8();
+        char *ch = b.data();
+        char s[8] = {'\0'};
+        QString str = "";
+        for (int i = 0; i < b.size(); ++i) {
+            sprintf(s, "%02x", ch[i]);
+            str.append(s);
+        }
+    } else {
+        str += data;
+    }
     ui->teDataReceived->setText(str);
 }
