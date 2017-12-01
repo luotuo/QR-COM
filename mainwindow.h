@@ -49,8 +49,11 @@ private slots:
 
     void closeEvent(QCloseEvent *event);
 
+    void on_pbClearLog_clicked();
+
 private:
     void init();
+    void writeLog(const QString &message);
 private:
     MySerialPort *serialPort;
     UpdateComInfo *updateComInfo;

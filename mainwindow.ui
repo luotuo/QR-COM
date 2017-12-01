@@ -451,9 +451,22 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>381</width>
+       <width>321</width>
        <height>91</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbClearLog">
+     <property name="geometry">
+      <rect>
+       <x>333</x>
+       <y>30</y>
+       <width>61</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>清空</string>
      </property>
     </widget>
    </widget>

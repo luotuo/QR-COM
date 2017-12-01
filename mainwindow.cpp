@@ -158,6 +158,9 @@ void MainWindow::sendData()
 
 void MainWindow::readData(QString data)
 {
+    if (ui->ccbPause->checkState()) {
+        return;
+    }
     QString str = ui->teDataReceived->toPlainText();
     if (ui->ccbHex->checkState()) {
         QByteArray b = data.toUtf8();
@@ -171,5 +174,22 @@ void MainWindow::readData(QString data)
     } else {
         str += data;
     }
+    if (ui->ccbAutoReturn->checkState()) {
+        str += "\n";
+    }
     ui->teDataReceived->setText(str);
+}
+
+void MainWindow::on_pbClearLog_clicked()
+{
+    ui->teLog->clear();
+}
+
+void MainWindow::writeLog(const QString &message)
+{
+    QString currentMessage = ui->teLog->toPlainText();
+    if (currentMessage.isEmpty())
+        ui->teLog->setText(message);
+    else
+        ui->teLog->setText(currentMessage + "\n" + message);
 }
