@@ -9,6 +9,8 @@
 #include "updatecominfo.h"
 #include "myserialport.h"
 
+#define LOG 1
+
 namespace Ui {
 class MainWindow;
 }

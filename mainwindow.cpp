@@ -74,6 +74,9 @@ void MainWindow::on_openCOM_clicked()
         serialPort->close();
         ui->openCOM->setText("打开");
         comOpenFlag = false;
+        if (LOG) {
+            writeLog("Serial port is closed");
+        }
     } else {
         // Open com
         currentCOM = ui->cbCom->currentText();
@@ -89,10 +92,16 @@ void MainWindow::on_openCOM_clicked()
         if (!res) {
             QMessageBox::warning(NULL, "警告", "打开串口失败",
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+            if (LOG) {
+                writeLog("Open serial port unsuccessfully");
+            }
             return;
         }
         ui->openCOM->setText("关闭");
         comOpenFlag = true;
+        if (LOG) {
+            writeLog("Serial port is opened");
+        }
     }
 }
 
@@ -136,6 +145,15 @@ void MainWindow::on_ccbLoopSend_clicked()
             timer = nullptr;
         }
     }
+    if (LOG) {
+        QString msg = "";
+        if (loopSendFlag) {
+            msg = "Send message circularly on";
+        } else {
+            msg = "Send message circularly off";
+        }
+        writeLog(msg);
+    }
 }
 
 void MainWindow::updateCbCom()
@@ -154,6 +172,10 @@ void MainWindow::sendData()
     QString data = ui->teDataSend->toPlainText();
     int res = serialPort->write(data);
     qDebug() << "send data == " << res;
+    if (LOG) {
+        QString msg = "Write " + QString::number(res) + "bytes";
+        writeLog(msg);
+    }
 }
 
 void MainWindow::readData(QString data)
